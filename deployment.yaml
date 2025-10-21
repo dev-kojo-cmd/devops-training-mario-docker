@@ -31,3 +31,5 @@ spec:
     port: 8600  # <-- Change this line to your desired port
     targetPort: 8080
   type: LoadBalancer
+
+  # ading a comment to test gitops
