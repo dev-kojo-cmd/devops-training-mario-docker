@@ -24,11 +24,13 @@ jobs:
         run: |
           docker pull docker.io/brudex/devops-tools:mario-game-1.0.0
           docker save -o supermariolatestdockerimage.tar docker.io/brudex/devops-tools:mario-game-1.0.0
+          ls -lh  # 👈 sanity check that file exists
+
      
       - name: Run Trivy vulnerability scanner in tarball mode
         uses: aquasecurity/trivy-action@master
         with:
-          input: /github/workspace/supermariolatestdockerimage.tar
+          input:  supermariolatestdockerimage.tar
           exit-code: '1'
           severity: 'CRITICAL,HIGH'
  
