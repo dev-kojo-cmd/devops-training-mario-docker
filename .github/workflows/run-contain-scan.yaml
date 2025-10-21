@@ -6,10 +6,25 @@ on:
       - master
  
 env:
-  VERSION: $(( $(cat version.txt) + 1 ))
+  VERSION: ${{ github.run_number }}
   
 jobs:
   
+  build_push_supermario_docker_image:
+    runs-on: ubuntu-latest
+ 
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+   
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+ 
+      - name: Build and Push Docker Image
+        run: |
+          docker build -t docker.io/brudex/devops-tools:mario-game-${{ env.VERSION }} .
+          docker push docker.io/brudex/devops-tools:mario-game-${{ env.VERSION }}
+
   run_container_image_scan_on_supermario_docker_image:
     runs-on: ubuntu-latest	
  
@@ -23,7 +38,7 @@ jobs:
       - name: Get Docker Image from Docker Hub
         run: |
           docker pull docker.io/brudex/devops-tools:mario-game-1.0.0
-          docker save -o supermariolatestdockerimage.tar docker.io/brudex/devops-tools:mario-game-1.0.0
+          docker save -o supermariolatestdockerimage.tar docker.io/brudex/devops-tools:mario-game-${{ env.VERSION }}
           ls -lh  # 👈 sanity check that file exists
 
      
