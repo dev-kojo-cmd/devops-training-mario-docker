@@ -37,8 +37,8 @@ jobs:
         
       - name: Get Docker Image from Docker Hub
         run: |
-          docker pull docker.io/brudex/devops-tools:mario-game-${{ env.VERSION }}
-          docker save -o supermariolatestdockerimage.tar docker.io/brudex/devops-tools:mario-game-${{ env.VERSION }}
+          docker pull docker.io/brudex/devops-tools:mario-game-1.0.0
+          docker save -o supermariolatestdockerimage.tar docker.io/brudex/devops-tools:mario-game-1.0.0
           ls -lh  # 👈 sanity check that file exists
 
      
